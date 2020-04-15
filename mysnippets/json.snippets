@@ -1,0 +1,216 @@
+priority -50
+
+###########################################################################
+#                            TextMate Snippets                            #
+###########################################################################
+snippet get "Get Elements"
+getElement${1/(T)|.*/(?1:s)/}By${1:T}${1/(T)|(I)|.*/(?1:agName)(?2:d)/}('$2')
+endsnippet
+
+snippet '':f "object method string"
+'${1:${2:#thing}:${3:click}}': function(element) {
+	${VISUAL}$0
+}${10:,}
+endsnippet
+
+snippet :f "Object Method"
+${1:method_name}: function(${3:attribute}) {
+	${VISUAL}$0
+}${10:,}
+endsnippet
+
+snippet :, "Object Value JS"
+${1:value_name}: ${0:value},
+endsnippet
+
+snippet : "Object key key: 'value'"
+${1:key}: ${2:"${3:value}"}${4:, }
+endsnippet
+
+snippet proto "Prototype (proto)"
+${1:class_name}.prototype.${2:method_name} = function(${3:first_argument}) {
+	${VISUAL}$0
+};
+
+endsnippet
+
+snippet for "for (...) {...} (counting up)" b
+for (var ${1:i} = 0, ${2:len} = ${3:Things.length}; $1 < $2; $1++) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet ford "for (...) {...} (counting down, faster)" b
+for (var ${2:i} = ${1:Things.length} - 1; $2 >= 0; $2--) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet fun "function (fun)"
+function ${1:function_name}(${2:argument}) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet vf "Function assigned to var"
+${1:var }${2:function_name} = function $2(${3}) {
+	${VISUAL}$0
+};
+endsnippet
+
+snippet iife "Immediately-Invoked Function Expression (iife)"
+(function(${1:window}) {
+	${VISUAL}$0
+}(${2:$1}));
+endsnippet
+
+snippet timeout "setTimeout function"
+setTimeout(function() {
+	${VISUAL}$0
+}${2:.bind(${3:this})}, ${1:10});
+endsnippet
+
+snippet fi "for prop in obj using hasOwnProperty" b
+for (${1:prop} in ${2:obj}){
+	if ($2.hasOwnProperty($1)) {
+		${VISUAL}$0
+	}
+}
+endsnippet
+
+# Snippets for Console Debug Output
+
+snippet ca "console.assert" b
+console.assert(${1:assertion}, ${2:"${3:message}"});
+endsnippet
+
+snippet cclear "console.clear" b
+console.clear();
+endsnippet
+
+snippet cdir "console.dir" b
+console.dir(${1:object});
+endsnippet
+
+snippet cdirx "console.dirxml" b
+console.dirxml(${1:object});
+endsnippet
+
+snippet ce "console.error" b
+console.error(${1:"${2:value}"});
+endsnippet
+
+snippet cgroup "console.group" b
+console.group("${1:label}");
+${VISUAL}$0
+console.groupEnd();
+endsnippet
+
+snippet cgroupc "console.groupCollapsed" b
+console.groupCollapsed("${1:label}");
+${VISUAL}$0
+console.groupEnd();
+endsnippet
+
+snippet ci "console.info" b
+console.info(${1:"${2:value}"});
+endsnippet
+
+snippet cl "console.log" b
+console.log(${1:"${2:value}"});
+endsnippet
+
+snippet cd "console.debug" b
+console.debug(${1:"${2:value}"});
+endsnippet
+
+snippet cprof "console.profile" b
+console.profile("${1:label}");
+${VISUAL}$0
+console.profileEnd();
+endsnippet
+
+snippet ctable "console.table" b
+console.table(${1:"${2:value}"});
+endsnippet
+
+snippet ctime "console.time" b
+console.time("${1:label}");
+${VISUAL}$0
+console.timeEnd("$1");
+endsnippet
+
+snippet ctimestamp "console.timeStamp" b
+console.timeStamp("${1:label}");
+endsnippet
+
+snippet ctrace "console.trace" b
+console.trace();
+endsnippet
+
+snippet cw "console.warn" b
+console.warn(${1:"${2:value}"});
+endsnippet
+
+# AMD (Asynchronous Module Definition) snippets
+
+snippet def "define an AMD module"
+define(${1:optional_name, }[${2:'jquery'}], ${3:callback});
+endsnippet
+
+snippet req "require an AMD module"
+require([${1:'dependencies'}], ${2:callback});
+endsnippet
+
+# vim:ft=snippets:
+#=================================
+#结对符
+#=================================
+# 括号 bracket
+snippet b "bracket" i
+(${1})
+endsnippet
+# 方括号 square bracket，设定为 st 而非 sb，避免与 b 冲突
+snippet st "square bracket" i
+[${1}]
+endsnippet
+# 大括号 brace
+snippet br "brace" i
+{
+	${1}
+}
+endsnippet
+# <>
+snippet at "arrow bucket" i
+<${1}>
+endsnippet
+# 单引号 single quote，设定为 se 而非 sq，避免与 q 冲突
+snippet se "single quote" i
+'${1}'
+endsnippet
+# 双引号 quote
+snippet q "quote" i
+"${1}"
+endsnippet
+# 指向符号
+snippet pt "pointer" i
+=>${1}
+endsnippet
+snippet ar "arrow" i
+=>${1}
+endsnippet
+snippet ha "hash" i
+{ ${1} }
+endsnippet
+snippet h "compact hash" i
+{${1}}
+endsnippet
+snippet ss ":" i
+::${1}
+endsnippet
+snippet vs "# string interpolation" i
+#{${1}}
+endsnippet
+snippet vp "# variable_name" i
+%{${1}}
+endsnippet
