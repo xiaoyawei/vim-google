@@ -149,11 +149,11 @@ snippet st "square bracket" i
 [${1}]
 endsnippet 
 # 大括号 brace 
-snippet br "brace" i 
+snippet br "brace" i
 {
-	${1} 
+	${1}
 }
-endsnippet 
+endsnippet
 # <>
 snippet at "arrow bucket" i
 <${1}>
@@ -170,6 +170,14 @@ endsnippet
 snippet ar "arrow" i 
 ->${1}
 endsnippet 
+# <<
+snippet in "insesrtion" i 
+<<${1}
+endsnippet 
+# >>
+snippet ex "extraction" i 
+>>${1}
+endsnippet 
 # dot 
 snippet d "dot" i 
 .${1}
@@ -177,4 +185,10 @@ endsnippet
 # 作用域 scope 
 snippet s "scope" i 
 ::${1}
+endsnippet
+snippet ha "hash" i
+{ ${1} }
+endsnippet
+snippet h "hash" i
+{${1}}
 endsnippet
