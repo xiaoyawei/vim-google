@@ -357,3 +357,6 @@ endif
 
 " undo tree
 nnoremap <Leader>ud :UndotreeToggle<CR>
+
+" clang-format
+Glug clang-format plugin[mappings]
