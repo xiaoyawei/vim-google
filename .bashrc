@@ -135,11 +135,12 @@ alias gfl='git diff --name-only HEAD HEAD^'
 
 alias less='less -R'
 alias more='more -R'
+alias k='kubectl'
 
 g(){
   if [ -z $2 ]
   then
-    ag -C 3 -i --java --python --cpp --color-match "1;31" --color-line-number "39" $1
+    ag -C 3 -i --java --python --cpp --proto --go --color-match "1;31" --color-line-number "39" $1
   elif [ $2 = "--all" ]
   then
     ag -C 3 -i --color-match "1;31" --color-line-number "39" $1
@@ -147,3 +148,17 @@ g(){
     ag -C 3 -i --color-match "1;31" --color-line-number "39" $2 $1
   fi
 }
+
+cf(){
+  if [ -z $2 ]
+  then
+    ag -C 3 -i --java --python --cpp --proto --color-match "1;31" --color-line-number "39" $1
+  elif [ $2 = "--all" ]
+  then
+    ag -C 3 -i --color-match "1;31" --color-line-number "39" $1
+  else
+    ag -C 3 -i --color-match "1;31" --color-line-number "39" $2 $1
+  fi
+}
+
+export PATH="$PATH:$(go env GOPATH)/bin"
