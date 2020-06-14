@@ -163,3 +163,11 @@ cf(){
 
 export PATH="$PATH:$(go env GOPATH)/bin"
 export PATH="$PATH:$HOME/bin"
+export EDITOR=vi
+
+# History stuff
+export HISTFILESIZE=1000000000
+export HISTSIZE=1000000
+export HISTTIMEFORMAT="%F %T "
+shopt -s cmdhist
+shopt -s histappend
