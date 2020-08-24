@@ -1,12 +1,8 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """Refresh various daily google credentials.
 
 From the Mac Road Warrior guide: http://wiki/Main/MacRoadWarrior
 """
-
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 import argparse
 import getpass
@@ -20,7 +16,7 @@ import sys
 # environment variables, replacing "DEFAULT_" by "AUTH_".
 ################################################################################
 
-# Default host name for prodaccess. Can be overridden by command line. You may
+# Default host name for gcert. Can be overridden by command line. You may
 # specify multiple hostnames by delimiting with spaces. Hostnames may be
 # unqualified (e.g. 'myhostname'), partially qualified (e.g. 'myhostname.mtv'),
 # or fully qualified (e.g. 'myhostname.mtv.corp.google.com').
@@ -30,7 +26,7 @@ DEFAULT_HOST = 'xwei.c.googlers.com xiaoyawei.c.googlers.com'
 DEFAULT_CORP_SUBDOMAIN = ''
 
 # Default corp domain when none specified (e.g., corp.google.com).
-DEFAULT_CORP_DOMAIN = ''
+DEFAULT_CORP_DOMAIN = 'corp.google.com'
 
 # Types of authentication to request by default.
 DEFAULT_SSH_CERTIFICATION = True
@@ -76,7 +72,7 @@ os.chdir(os.environ['HOME'])
 usage = ('%(prog)s [options] [hostname]\n'
          'Refresh authorizations, \n'
          'Including glogin and gcert auth on the local host\n'
-         'and prodaccess on the remote host.\n'
+         'and gcert on the remote host.\n'
          'Default remote host name = ' + host_to_use + '\n\n'
          'Attempts to minimise Password entry as much as possible')
 parser = argparse.ArgumentParser(usage=usage)
@@ -117,14 +113,14 @@ parser.add_argument(
     '--nossh_on_security_key',
     action='store_true',
     dest='nossh_on_security_key',
-    help=('Add --nossh_on_security_key to prodaccess'),
+    help=('Add --nossh_on_security_key to gcert'),
     default=False)
 
 parser.add_argument(
     'hostname',
     action='store',
     nargs='*',
-    help=('hostnames to run prodaccess on'),
+    help=('hostnames to run gcert on'),
     default=host_to_use.split(' '))
 
 options = parser.parse_args()
@@ -166,7 +162,7 @@ def HasMultiplexedConnection(remotehost):
   proc = subprocess.Popen(sshcmd, stderr=subprocess.PIPE)
   proc.wait()
   _, stderr = proc.communicate()
-  return not bool(stderr.find('Master running'))
+  return not bool(stderr.find(b'Master running'))
 
 
 def RunRemoteCommand(command, remotehost):
@@ -212,16 +208,14 @@ default_host = host_list[0]
 
 certification = ''
 if options.sshcert:
-  certification += ' -ssh_cert'
+  certification += ' -prodssh'
 if options.nossh_on_security_key:
   certification += ' --nossh_on_security_key'
-if options.kinit:
-  certification += ' --kinit'
 
 print('auth-refresh-gtunnel.py - go/macroadwarrior')
 
 password = getpass.getpass('Please enter password for %s (not stored): ' %
-                           getpass.getuser())
+                           getpass.getuser()).encode()
 
 print('Running "glogin && gcert" to get local SSO ticket')
 PrintIfDebug('running glogin -glogin_no_tty')
@@ -238,13 +232,15 @@ if result:
 print('Got local SSO ticket')
 
 for host in host_list:
-  # Need to launch an interactive shell for prodaccess with password to work.
-  print('Running glogin && prodaccess on %s (2 gnubby taps required)... ' %
-        host)
+  # Need to launch an interactive shell for gcert with password to work.
+  print('Running glogin && gcert %son %s (2 gnubby taps required)... ' %
+        ('&& gkerb ' if options.kinit else '', host))
 
-  remotecmd = ('bash -c \'echo "logged in, running glogin && prodaccess %s" '
+  remotecmd = ('bash -c \'echo "logged in, running glogin && gcert %s" '
                '&& /usr/bin/glogin -glogin_no_tty '
-               '&& /usr/bin/prodaccess %s\'') % (certification, certification)
+               '&& /usr/bin/gcert %s\'') % (certification, certification)
+  if options.kinit:
+    remotecmd += ' && gkerb'
   RunRemoteCommand(remotecmd, host)
 
   if options.cideraccess:
