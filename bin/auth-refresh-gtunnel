@@ -26,7 +26,7 @@ DEFAULT_HOST = 'xwei.c.googlers.com xiaoyawei.c.googlers.com'
 DEFAULT_CORP_SUBDOMAIN = ''
 
 # Default corp domain when none specified (e.g., corp.google.com).
-DEFAULT_CORP_DOMAIN = 'corp.google.com'
+DEFAULT_CORP_DOMAIN = ''
 
 # Types of authentication to request by default.
 DEFAULT_SSH_CERTIFICATION = True
