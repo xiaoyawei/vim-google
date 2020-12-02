@@ -118,11 +118,12 @@ alias ll='ls -alFG'
 alias la='ls -A --color'
 alias l='ls -CF --color'
 
-alias gpr='git pull --rebase'
+alias gpr='git pull --rebase --recurse-submodules'
 alias gcm='git checkout master'
 alias gc='git checkout'
 alias gb='git branch'
 alias gd='git diff'
+alias gds='git diff --staged'
 alias grm='git rebase master'
 alias gpf='git push -f'
 alias gs='git status'
@@ -163,7 +164,7 @@ cf(){
 
 export PATH="$PATH:$(go env GOPATH)/bin"
 export PATH="$PATH:$HOME/bin"
-export EDITOR=vi
+export GOROOT="$(go env GOROOT)"
 
 # History stuff
 export HISTFILESIZE=1000000000
